@@ -1,3 +1,28 @@
+# SaaS Fulfillment API Integration
+
+This repository provides a basic implementation of the Microsoft SaaS Fulfillment APIs using TypeScript. It supports subscription management for offers listed on the Microsoft AppSource marketplace. 
+
+## Features
+
+- Handle subscription resolution
+- Activate subscriptions
+- Manage subscription changes (upgrades/downgrades)
+- Cancel subscriptions
+
+## Subscription Lifecycle Flow
+
+Below is an overview of the subscription lifecycle for a SaaS offer listed on Microsoft AppSource:
+
+| **Step**                        | **Description**                                                                                           | **Function/API Called**                                    |
+|----------------------------------|-----------------------------------------------------------------------------------------------------------|-----------------------------------------------------------|
+| **1. Customer selects a plan**   | The customer selects a plan and initiates the purchase on Microsoft AppSource.                            | No API call—handled by AppSource.                         |
+| **2. Microsoft redirects to landing page** | After the customer completes the purchase, Microsoft redirects them to your configured landing page with the `marketplaceToken` as a query parameter. | No API call—handled by your landing page.                 |
+| **3. Resolve subscription**      | Use the `marketplaceToken` to retrieve subscription details, such as `subscriptionId`, plan, and quantity. | **`resolveSubscription`** (via `/resolve` endpoint)       |
+| **4. Activate subscription**     | Activate the subscription with the customer's selected plan and quantity.                                | **`activateSubscription`** (via `/activate` endpoint)     |
+| **5. Customer upgrades/downgrades** | The customer chooses to upgrade or downgrade their subscription through AppSource.                       | **`changeSubscription`** (via `/change` endpoint)         |
+| **6. Customer cancels subscription** | The customer cancels their subscription via AppSource.                                                    | **`deleteSubscription`** (via `/delete` endpoint)         |
+
+
 # Microsoft Commercial Marketplace API Emulator
 
 This repository contains a Node.js implementation of an emulator for the Microsoft commercial marketplace SaaS Fulfillment APIs.
